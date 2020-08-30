@@ -10,10 +10,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    @reviews = Review.page(params[:page]).per(3).order("created_at DESC")
-    @review_count = Review.where(product_id: params[:id]).count
-    # Write code above then 'render'.
-    render "show", products: @products
+    @reviews = @product.reviews.page(params[:page]).per(3).order(created_at: 'DESC')
   end
 
   # GET /products/new
@@ -68,7 +65,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.find params[:id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
